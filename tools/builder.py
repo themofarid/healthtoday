@@ -7,6 +7,7 @@ from pathlib import Path
 import markdown
 
 from tools import templates as t
+from tools.compliance import ComplianceError, check_draft, check_page
 from tools.config import Config, load_config
 from tools.draft import Article, DraftError, parse_draft
 from tools.offers import Offer, load_offers
@@ -68,9 +69,11 @@ def render_support_pages(offers: list, config: Config, about_md: str | None = No
 
 
 def build_site(root: Path) -> list:
+    """Render every approved draft; write nothing unless all of them pass the checks."""
     root = Path(root)
     cfg = load_config(root / "config.toml")
     offers = {o.slug: o for o in load_offers(root / "offers.csv")}
+    outputs: dict = {}
     built: list = []
     for f in sorted((root / "approved").glob("*.md")):
         offer = offers.get(f.stem)
@@ -78,18 +81,25 @@ def build_site(root: Path) -> list:
             raise DraftError(f"{f.name}: no offer with slug '{f.stem}' in offers.csv")
         if offer.status == "paused":
             continue
+        text = f.read_text(encoding="utf-8")
+        issues = check_draft(text)
+        if issues:
+            raise ComplianceError(issues, f.name)
         try:
-            article = parse_draft(f.read_text(encoding="utf-8"))
+            article = parse_draft(text)
         except DraftError as err:
             raise DraftError(f"{f.name}: {err}") from err
-        out = root / "site" / offer.slug / "index.html"
-        out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(render_page(article, offer, cfg), encoding="utf-8")
+        doc = render_page(article, offer, cfg)
+        issues = check_page(doc)
+        if issues:
+            raise ComplianceError(issues, f.name)
+        outputs[root / "site" / offer.slug / "index.html"] = doc
         built.append(offer.slug)
     about = root / "about.md"
     about_md = about.read_text(encoding="utf-8") if about.exists() else None
     for rel, doc in render_support_pages([offers[s] for s in built], cfg, about_md).items():
-        out = root / "site" / rel
-        out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(doc, encoding="utf-8")
+        outputs[root / "site" / rel] = doc
+    for path, doc in outputs.items():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(doc, encoding="utf-8")
     return built
