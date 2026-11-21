@@ -18,6 +18,7 @@ ERROR_PHRASES = (
     "offer not found",
 )
 STRIKES_TO_DEAD = 2
+BLOCKED_STATUSES = (403, 429)
 _UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
        "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
 
@@ -27,6 +28,7 @@ class LinkResult:
     ok: bool
     reason: str
     final_url: str
+    inconclusive: bool = False
 
 
 def http_fetch(url: str) -> tuple:
@@ -44,6 +46,9 @@ def check_link(offer, fetch: Fetcher) -> LinkResult:
         status, final_url, body = fetch(offer.link)
     except Exception:
         return LinkResult(False, "unreachable", "")
+    if status in BLOCKED_STATUSES:
+        # The site refused our bot; that says nothing about whether the offer is alive.
+        return LinkResult(False, f"blocked ({status}), not counted", final_url, inconclusive=True)
     if status != 200:
         return LinkResult(False, f"http {status}", final_url)
     if offer.link_mode == "hoplink":
@@ -62,7 +67,11 @@ def run_watchdog(offers: list, fetch: Fetcher) -> tuple:
         if o.status == "paused":
             updated.append(o)
             continue
-        if check_link(o, fetch).ok:
+        result = check_link(o, fetch)
+        if result.inconclusive:
+            updated.append(o)
+            continue
+        if result.ok:
             updated.append(o.with_(strikes=0, status="live"))
             continue
         strikes = o.strikes + 1

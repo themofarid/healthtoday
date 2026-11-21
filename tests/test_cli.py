@@ -132,3 +132,23 @@ class UsageTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ModuleEntryTests(unittest.TestCase):
+    def test_module_runs_from_any_directory(self):
+        import os
+        import shutil
+        import subprocess
+        import sys
+        import tempfile
+        from pathlib import Path
+
+        proj = make_root(approved={"tonicgreens.md": DRAFT})
+        shutil.copytree(Path(__file__).resolve().parent.parent / "tools", proj / "tools",
+                        ignore=shutil.ignore_patterns("__pycache__"))
+        elsewhere = tempfile.mkdtemp()
+        env = {**os.environ, "PYTHONPATH": str(proj)}
+        r = subprocess.run([sys.executable, "-m", "tools", "build"], cwd=elsewhere, env=env,
+                           capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertTrue((proj / "site" / "tonicgreens" / "index.html").exists())

@@ -142,3 +142,23 @@ class HttpFetchTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class InconclusiveTests(unittest.TestCase):
+    def blocked(self, status):
+        return lambda url: (status, "https://vendor.example/x", "Access denied")
+
+    def test_blocked_by_site_is_inconclusive_not_a_failure(self):
+        for status in (403, 429):
+            with self.subTest(status=status):
+                r = check_link(offer(), self.blocked(status))
+                self.assertTrue(r.inconclusive)
+                self.assertFalse(r.ok)
+                self.assertIn("blocked", r.reason)
+
+    def test_inconclusive_check_leaves_offer_unchanged(self):
+        for start in (offer(strikes=1), offer(strikes=2, status="dead")):
+            with self.subTest(status=start.status):
+                (o,), newly = run_watchdog([start], self.blocked(403))
+                self.assertEqual(o, start)
+                self.assertEqual(newly, [])
