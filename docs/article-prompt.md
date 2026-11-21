@@ -31,7 +31,10 @@ Use EXACTLY this markdown format and nothing else:
 <paragraph>
 ```
 
+Voice: friendly and direct. Speak to the reader as 'you', ask a few real questions (for example 'Do you struggle to...?'), and open with a short intro, then bold lead-ins such as **What is <product>?** and **How do you take it?** (bold text, not headings). End the conclusion with an honest take on whether it is worth the money.
+
 Rules:
+- If the sales page shows pack prices, list them in the con section 'at the time of writing' and tell the reader to check the current offer.
 - Exactly 3 benefits and 1 honest con. No other headings.
 - Use only facts that appear in the sales page text I paste below. Do not invent ingredients, studies, prices or numbers.
 - Describe what the vendor says the product is for, attributing it to the vendor. Do not promise results.
