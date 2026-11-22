@@ -30,10 +30,12 @@ h2{font-size:1.3rem;margin-top:2rem}
 .button{display:inline-block;background:#2f6f4e;color:#fff;padding:.8rem 1.4rem;border-radius:.4rem;text-decoration:none;font-weight:600}
 .gone{background:#f1ede4;padding:.8rem 1rem;border-radius:.4rem}
 footer{font-size:.9rem;color:#52606d}
+img{max-width:100%;height:auto;border-radius:.4rem}
+.logo{vertical-align:-5px;margin-right:.45rem}
 </style>
 </head>
 <body>
-<header class="site"><a href="${prefix}">$site_title</a></header>
+<header class="site"><a href="${prefix}"><svg class="logo" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 3C9 3 4 9 4 15c0 2.2 1 4.2 3 5.2 0-6 4-10.200 10-12.200-5 3-8 7-8 12.200C16 20.200 21 14 20 3z" fill="#2f6f4e"/></svg>$site_title</a></header>
 <main>
 $body
 </main>

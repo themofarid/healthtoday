@@ -1,17 +1,36 @@
 # TonicGreens Review: Is It Worth Your Money?
-### An honest, plain-language look at this 57-ingredient daily greens powder
+### What is inside this 57-ingredient greens powder, what it costs and who it may suit
 
-Do you struggle to eat enough fruits and vegetables? You are not alone, and that is exactly why greens powders have become so popular. One scoop, one glass, done. TonicGreens is one of the options people keep asking about, so I went through the official product page line by line to see what it really offers.
+[![TonicGreens pack](images/pgs3-min.png)]({{https://www.digistore24.com/redir/484749/vdw1757/tonicgreensgit}})
 
-In this review I cover what TonicGreens is, what is inside it, what it costs and where it falls short. At the end I will tell you honestly what I think. One thing up front: I have not taken it myself, so everything here comes from the vendor's own page, and I will point out where that page says more than it proves.
+One scoop a day, more than 57 ingredients. That is the pitch behind TonicGreens, a greens powder that the vendor says combines vegetables, fruits, berries, mushrooms, herbs and a probiotic blend in a single drink. At the time of writing it costs between $49 and $79 per bottle, depending on the pack you choose.
+
+Is it right for you? In this review I cover what is inside, what it costs and where it falls short, so you can decide in a few minutes.
+
+[![TonicGreens](images/pgs_ingredients_all_min-min.png)]({{https://www.digistore24.com/redir/484749/vdw1757/tonicgreensgit}})
+
+**Who it may suit**
+
+- You want an easy daily habit and you are tired of multi-step supplement routines.
+- You like knowing exactly what is in your glass, ingredient by ingredient.
+- You are comfortable with a larger pack to get the best price.
+
+**Who may want to skip it**
+
+- You would rather not pay shipping on a short trial.
+- You need a product with independent studies behind it, which the vendor's page does not show.
 
 **What is TonicGreens?**
 
-TonicGreens is a powdered drink mix. The vendor describes it as a blend of more than 57 ingredients meant to support the immune system and overall wellness. It says the product is made in the USA in a registered GMP facility.
+TonicGreens is a powdered drink mix. The vendor describes it as a blend meant to support the immune system and overall wellness, and says it is made in the USA in a registered GMP facility.
 
 **How do you take it?**
 
 According to the vendor, you add one scoop to a glass of water once a day, or stir it into your favorite shake or smoothie. That is the whole routine.
+
+**How I put this review together**
+
+I wrote this review from the official product page and ingredient list, so I stick to what the vendor states and tell you where it says more than it proves. Treat the vendor's promises as promises, and use the details below as a starting point for your own checking.
 
 ## Benefit 1: A simple one-scoop routine
 Be honest: how many daily habits have you started and dropped? Capsules to count, powders to measure, recipes to follow. TonicGreens keeps it to a single scoop, which takes seconds.
@@ -19,6 +38,9 @@ Be honest: how many daily habits have you started and dropped? Capsules to count
 The vendor also says that missing a day or two is not a problem, so you do not have to treat it as all-or-nothing. For anyone who likes a routine that is easy to keep, that matters.
 
 ## Benefit 2: An ingredient list you can actually read
+
+[![TonicGreens Ingredients](images/tgs-label-mockup-v2-min.png)]({{https://www.digistore24.com/redir/484749/vdw1757/tonicgreensgit}})
+
 Many supplements hide behind vague blends. TonicGreens lists its ingredients by name and groups them, so you can see what would be in your glass.
 
 The page highlights sources of quercetin such as kale, broccoli, green bell pepper, orange and green tea leaf. It lists grapes and berries, which it presents as a source of resveratrol, plus turmeric root for curcumin. There are also extras such as spirulina, parsley, wheatgrass and apricot, a mushroom trio of reishi, shiitake and maitake, ginseng root, beet root and a prebiotic and probiotic mix.
@@ -28,9 +50,12 @@ A readable list helps if you have allergies or dietary preferences, because you 
 ## Benefit 3: A clear refund policy
 Worried about spending money on something that does not suit you? The vendor describes a 60-day money-back guarantee and says you can request a refund by email. That lowers the risk of trying a new product.
 
-Treat it as the vendor's promise rather than something I have tested, and read the full refund policy linked at the bottom of the official page before you order, because the exact terms are what count.
+Treat it as the vendor's promise, and read the full refund policy linked at the bottom of the official page before you order, because the exact terms are what count.
 
 ## The one con: Shipping fees on the smaller packs
+
+[![TonicGreens pack](images/pgs6-min.png)]({{https://www.digistore24.com/redir/484749/vdw1757/tonicgreensgit}})
+
 TonicGreens comes in three packages. At the time of writing, the vendor's page lists them like this:
 
 - 60-day supply: $79 per bottle, $158 in total, plus shipping.

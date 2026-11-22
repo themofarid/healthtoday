@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import html
+import re
+import shutil
 from pathlib import Path
 
 import markdown
@@ -17,8 +19,43 @@ def _e(text: str) -> str:
     return html.escape(text, quote=True)
 
 
-def _md(text: str) -> str:
-    return markdown.markdown(text) if text.strip() else ""
+IMAGE_EXTS = (".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg")
+_IMAGE_REF = re.compile(r"\(images/([^)\s]*)\)")
+
+
+def _md(text: str, offer: Offer | None = None) -> str:
+    """Markdown to HTML. Pages sit one folder below the site root, so images/ becomes ../images/."""
+    if not text.strip():
+        return ""
+    text = text.replace("](images/", "](../images/")
+    if offer is not None:
+        text = text.replace("{{AFFILIATE_LINK}}", offer.link)
+    return markdown.markdown(text)
+
+
+def _mark_links(body: str, offer: Offer) -> str:
+    """Affiliate links written in the article get rel=sponsored; on a dead offer they are removed."""
+    href = offer.link.replace("&", "&amp;")
+    if offer.status == "dead":
+        return re.sub(r'<a href="' + re.escape(href) + r'">(.*?)</a>', r"\1", body, flags=re.S)
+    return body.replace(f'<a href="{href}">', f'<a href="{href}" rel="{t.BUTTON_REL}">')
+
+
+def _check_images(text: str, root: Path, filename: str) -> None:
+    for name in _IMAGE_REF.findall(text):
+        if ".." in name or "/" in name or not (root / "images" / name).is_file():
+            raise DraftError(f"{filename}: image 'images/{name}' not found in the images folder")
+
+
+def _copy_images(root: Path) -> None:
+    src = root / "images"
+    if not src.is_dir():
+        return
+    for f in sorted(src.iterdir()):
+        if f.is_file() and f.suffix.lower() in IMAGE_EXTS:
+            dest = root / "site" / "images"
+            dest.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(f, dest / f.name)
 
 
 def _shell(title: str, description: str, keywords: str, body: str, prefix: str, cfg: Config) -> str:
@@ -37,11 +74,11 @@ def render_page(article: Article, offer: Offer, config: Config) -> str:
     parts = [f"<h1>{_e(article.headline)}</h1>",
              f'<p class="sub">{_e(article.subheadline)}</p>',
              f'<p class="disclosure">{t.DISCLOSURE}</p>',
-             _md(article.intro_md)]
+             _md(article.intro_md, offer)]
     for sec in [*article.benefits, article.con, article.conclusion]:
-        parts += [f"<h2>{_e(sec.title)}</h2>", _md(sec.body_md)]
+        parts += [f"<h2>{_e(sec.title)}</h2>", _md(sec.body_md, offer)]
     parts += [_cta(offer), f'<p class="note">{t.MEDICAL_NOTE}</p>']
-    body = "\n".join(p for p in parts if p)
+    body = _mark_links("\n".join(p for p in parts if p), offer)
     return _shell(article.headline, article.subheadline, ", ".join(offer.tags), body, "../", config)
 
 
@@ -82,6 +119,7 @@ def build_site(root: Path) -> list:
         if offer.status == "paused":
             continue
         text = f.read_text(encoding="utf-8")
+        _check_images(text, root, f.name)
         issues = check_draft(text)
         if issues:
             raise ComplianceError(issues, f.name)
@@ -102,4 +140,5 @@ def build_site(root: Path) -> list:
     for path, doc in outputs.items():
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(doc, encoding="utf-8")
+    _copy_images(root)
     return built
